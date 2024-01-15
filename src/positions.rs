@@ -1,9 +1,7 @@
 use chess::{Board, Piece, Color, BitBoard};
 use crate::pieces;
 
-pub struct Positions {
-
-}
+pub struct Positions;
 
 impl Positions {
     pub fn pawn() -> Vec<i32> {
@@ -85,24 +83,7 @@ impl Positions {
     }
 }
 
-pub fn get_pos_eval(board: &Board) {
-    // Get all the pieces and their type
-    // let black_pawn = pieces::get_black_pieces(Piece::Pawn, board);
-    // let black_knight = pieces::get_black_pieces(Piece::Knight, board);
-    // let black_bishop = pieces::get_black_pieces(Piece::Bishop, board);
-    // let black_rook = pieces::get_black_pieces(Piece::Rook, board);
-    // let black_queen = pieces::get_black_pieces(Piece::Queen, board);
-    // let black_king = pieces::get_black_pieces(Piece::King, board);
-
-    // let black_pawn = pieces::get_black_pieces(Piece::Pawn, board);
-    // let black_knight = pieces::get_black_pieces(Piece::Knight, board);
-    // let black_bishop = pieces::get_black_pieces(Piece::Bishop, board);
-    // let black_rook = pieces::get_black_pieces(Piece::Rook, board);
-    // let black_queen = pieces::get_black_pieces(Piece::Queen, board);
-    // let black_king = pieces::get_black_pieces(Piece::King, board);
-
-    // We want a mappable array of every piece type and what square they're on
-    // First map over all pieces
+pub fn get_pos_eval(board: &Board) -> i32 {
     let pieces = ["pawn", "knight", "bishop", "rook", "queen", "king"];
     let mut piece_type = Piece::Pawn;
     let mut eval = 0;
@@ -118,9 +99,16 @@ pub fn get_pos_eval(board: &Board) {
             _ => piece_type = Piece::Pawn
         };
 
-        eval += piece_pos_eval(piece_type, board, Color::White);
-        piece_pos_eval(piece_type, board, Color::Black);
+        let white_eval = piece_pos_eval(piece_type, board, Color::White);
+        let black_eval = piece_pos_eval(piece_type, board, Color::Black);
+
+        // println!("WHITE: {white_eval} BLACK: {black_eval} PIECE: {piece_type}");
+
+        eval += white_eval;
+        eval -= black_eval;
     }
+
+    eval
 }
 
 // Make another function to get all their squares too and put it in a vector
@@ -139,7 +127,16 @@ pub fn piece_pos_eval(piece: Piece, board: &Board, color: Color) -> i32 {
     }
 
     for square in bitboard {
-        eval += pos[square.to_index()];
+
+        let square_index = square.to_index();
+
+        // println!("SQUARE: {square} INDEX: {square_index} PIECE: {piece} COLOR: {:?}", color);
+
+        if color == Color::Black {
+            eval += pos[square_index];
+        } else {
+            eval += pos.clone().into_iter().rev().collect::<Vec<i32>>()[square_index];
+        }
     }
 
     eval

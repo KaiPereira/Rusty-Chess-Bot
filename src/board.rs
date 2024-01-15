@@ -1,4 +1,4 @@
-use chess::{Board, BitBoard};
+use chess::{Board, BitBoard, Square};
 
 
 pub fn create_board() -> Board {
