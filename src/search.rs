@@ -1,12 +1,12 @@
 use std::string;
 
-use chess::{Board, MoveGen, Square, ChessMove, Color};
+use chess::{Board, MoveGen, Square, ChessMove, Color, BoardStatus};
 use crate::evaluation;
 
 
 // Minimax without alpha beta pruning
 pub fn search(board: &Board, depth: i32, maximizing: bool, mut alpha: i32, mut beta: i32) -> i32 {
-    if depth == 0 {
+    if (depth == 0) || (board.status() == BoardStatus::Checkmate) {
         return evaluation::get_eval(board);
     }
 

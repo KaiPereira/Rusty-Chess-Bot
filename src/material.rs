@@ -1,4 +1,4 @@
-use chess::{Board, Piece};
+use chess::{Board, Piece, BoardStatus, Color};
 use crate::pieces;
 
 pub fn get_material(board: &Board) -> i32 {
@@ -19,9 +19,6 @@ pub fn get_material(board: &Board) -> i32 {
     
     let white_sum = white_pawn + white_bishop + white_king + white_knight + white_queen + white_rook;
     let black_sum = black_bishop + black_king + black_knight + black_pawn + black_queen + black_rook;
-
-
-    // println!("white: {white_sum} black: {black_sum}");
 
     let total_material = (white_sum as i32) - (black_sum as i32);
     
