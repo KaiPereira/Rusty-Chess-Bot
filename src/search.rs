@@ -92,6 +92,7 @@ pub fn get_move(board: &Board, depth: i32, maximizing: bool) -> Option<ChessMove
         }
     }
     
+    println!("PLAYED MOVE: {} Eval: {best_eval}", best_move.unwrap());
 
     best_move
 }

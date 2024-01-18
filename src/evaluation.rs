@@ -6,8 +6,10 @@ use crate::material;
 pub fn get_eval(board: &Board) -> i32 {
     // If the move is checkmate, give the worse possible positions
     if (board.side_to_move() == Color::White) && board.status() == BoardStatus::Checkmate {
+        println!("SEE CHECKMATE!");
         return std::i32::MIN;
     } else if (board.side_to_move() == Color::Black) && board.status() == BoardStatus::Checkmate {
+        println!("SEE CHECKMATE!");
         return std::i32::MAX;
     }
 
