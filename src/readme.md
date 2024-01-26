@@ -9,7 +9,7 @@ Chess engine completely from scratch
 To-Do:
 
 **Search**:
-- Visual representation of the board
+~~- Visual representation of the board~~
 - Transposition tables
 - Parallel root moves (legal moves)
 *- Maybe aspiration windows - more research needed*
